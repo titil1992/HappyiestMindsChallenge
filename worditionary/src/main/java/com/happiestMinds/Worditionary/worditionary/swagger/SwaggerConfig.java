@@ -15,7 +15,7 @@ public class SwaggerConfig {
 	
 	@Bean
 	public Docket worditionaryApi() {
-		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.happiestMinds.Worditionary.worditionary.web")).paths(regex("/*")).build();
+		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.happiestMinds.Worditionary.worditionary.web")).paths(regex("/.*")).build();
 	}
 
 }
