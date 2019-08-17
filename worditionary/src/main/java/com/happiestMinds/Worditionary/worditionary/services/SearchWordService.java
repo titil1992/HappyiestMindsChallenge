@@ -13,9 +13,12 @@ import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 public class SearchWordService {
 	public boolean searchWord(String word) throws IOException {
+		word = word.trim();
 		File f = ResourceUtils.getFile("dictionary.json");
 		String content = new String(Files.readAllBytes(f.toPath()));
 		JsonParser parser = JsonParserFactory.getJsonParser();
@@ -34,6 +37,10 @@ public class SearchWordService {
 				int oldval = occurList.get(i);
 				int newVal = oldval + 1;
 				occurList.set(i, newVal);
+				//write to json
+				map.put(strList.get(i), newVal);
+				ObjectMapper mapper = new ObjectMapper();
+				mapper.writeValue(f, map);
 				//sort the data in the relevant new order
 				sortArr(occurList, 0, strList.size()-1, strList);
 				return true;
@@ -108,7 +115,12 @@ public class SearchWordService {
         } 
 	}
 	
-	public HashMap<String, String> searchWords(ArrayList<String> words){
-		return new HashMap<>();
+	public HashMap<String, String> searchWords(ArrayList<String> words) throws IOException{
+		HashMap<String, String> result = new HashMap<>();
+		for(String str:words) {
+			str = str.trim();
+			result.put(str, searchWord(str)?"Word found":"Word not found");
+		}
+		return result;
 	}
 }

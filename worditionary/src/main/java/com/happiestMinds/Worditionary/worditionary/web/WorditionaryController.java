@@ -47,7 +47,7 @@ public class WorditionaryController {
 	}
 	
 	@GetMapping("/searchWord/{word}")
-	public String searchWord(@PathVariable("word") String word) {
+	public String searchWord(@PathVariable("word") String word) throws IOException {
 		if(searchWordService.searchWord(word)) {
 			return "Word Found";
 		}
@@ -55,7 +55,7 @@ public class WorditionaryController {
 	}
 	
 	@GetMapping("/searchWords")
-	public HashMap<String, String> searchWords(@RequestParam("words") ArrayList<String> words) {
+	public HashMap<String, String> searchWords(@RequestParam("words") ArrayList<String> words) throws IOException {
 		HashMap<String, String> result = searchWordService.searchWords(words);
 		return result;
 	}

@@ -1,0 +1,13 @@
+1) The best software is one that does nothing.
+	https://stackoverflow.com/questions/12629749/how-does-grep-run-so-fast
+
+2) Caching at every Layer
+	Stale data should be acceptable
+	Cache poisoning should be avoided.
+
+3) 12 Factor Applications
+	https://12factor.net/
+
+4) 
+
+/usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask-versions
