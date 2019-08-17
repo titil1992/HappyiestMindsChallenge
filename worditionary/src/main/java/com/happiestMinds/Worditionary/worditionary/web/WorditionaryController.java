@@ -1,5 +1,7 @@
 package com.happiestMinds.Worditionary.worditionary.web;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,7 +33,7 @@ public class WorditionaryController {
 	private SaveWordService saveWordService;
 	
 	@PostMapping("/uploadFile")
-	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws MyFileNotFoundException {
+	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws MyFileNotFoundException, FileNotFoundException, IOException {
 		String fileName = fileStorageService.storeFile(file);
 		String msg = saveWordService.textFileToWords(fileStorageService.loadFileAsResource(fileName));
 
