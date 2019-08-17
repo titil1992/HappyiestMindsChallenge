@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.happiestMinds.Worditionary.worditionary.exceptions.MyFileNotFoundException;
 import com.happiestMinds.Worditionary.worditionary.services.FileStorageService;
+import com.happiestMinds.Worditionary.worditionary.services.SaveWordService;
 import com.happiestMinds.Worditionary.worditionary.services.SearchWordService;
 import com.happiestMinds.Worditionary.worditionary.util.UploadFileResponse;
 
@@ -25,9 +27,13 @@ public class WorditionaryController {
 	@Autowired
 	private SearchWordService searchWordService;
 	
+	@Autowired
+	private SaveWordService saveWordService;
+	
 	@PostMapping("/uploadFile")
-	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws MyFileNotFoundException {
 		String fileName = fileStorageService.storeFile(file);
+		String msg = saveWordService.textFileToWords(fileStorageService.loadFileAsResource(fileName));
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
